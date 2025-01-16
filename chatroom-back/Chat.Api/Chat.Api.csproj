@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+      <OutputType>Library</OutputType>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Mapster" Version="7.4.0" />
+        <PackageReference Include="Mapster.EFCore" Version="5.1.1" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <ProjectReference Include="..\Chat.ApiModel\Chat.ApiModel.csproj" />
+      <ProjectReference Include="..\Chat.Business\Chat.Business.csproj" />
+    </ItemGroup>
+
+</Project>

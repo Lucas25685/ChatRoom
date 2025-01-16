@@ -1,0 +1,25 @@
+@if (this.user(); as user) {
+  <div class="chat-main-account">
+    <h2 class="text-4xl font-semibold text-gray-900 dark:text-white">My account</h2>
+
+    <div class="chat-main-account-container">
+      <div class="chat-main-account-left">
+        <div class="flex flex-row justify-center">
+          <div class="relative">
+            <img
+              class="border rounded-full h-60 w-60 border-gray-200 dark:border-gray-700"
+              [src]="this.getGravatarUrl(user.email, 512)"
+              [alt]="user.firstName"
+            />
+
+            <button class="absolute flex justify-center items-center h-12 w-12 bottom-3 right-3 border rounded-full border-gray-200 bg-white hover:bg-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-900">
+              <ng-icon class="text-gray-900 dark:text-white" name="saxEditOutline" />
+            </button>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+}

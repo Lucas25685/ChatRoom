@@ -1,0 +1,14 @@
+.chat-theme-switch-component {
+	@apply flex items-center
+		cursor-pointer;
+
+	.chat-theme-switch-component-inner {
+		@apply flex flex-row justify-center items-center absolute top-[2px] start-[2px] h-5 w-5
+			border rounded-full transition-all
+			border-gray-300 bg-white;
+
+		&:is(.dark *) {
+			@apply border-gray-700 bg-gray-800;
+		}
+	}
+}

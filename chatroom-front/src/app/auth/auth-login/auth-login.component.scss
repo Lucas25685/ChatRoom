@@ -1,0 +1,21 @@
+.chat-auth-login {
+	@apply mt-10 space-y-4 sm:mx-auto sm:w-full sm:max-w-sm;
+
+	.chat-auth-login-button {
+		@apply rounded-xl py-6 w-full
+			border
+			border-gray-200 text-gray-900;
+
+		&:hover {
+			@apply bg-gray-200;
+		}
+
+		&:is(.dark *) {
+			@apply text-white border-gray-700 bg-gray-800;
+
+			&:hover {
+				@apply bg-gray-900;
+			}
+		}
+	}
+}

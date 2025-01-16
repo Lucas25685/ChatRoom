@@ -1,0 +1,309 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "ChatRoom API",
+    "version": "1.0"
+  },
+  "paths": {
+    "/status": {
+      "get": {
+        "tags": [
+          "Status"
+        ],
+        "summary": "Gets the status of the platform.",
+        "responses": {
+          "200": {
+            "description": "Platform is up."
+          }
+        }
+      }
+    },
+    "/api/user/register": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Registers a new user with the specified email and password.",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "description": "The email of the user.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "password",
+            "in": "query",
+            "description": "The password of the user.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The user was created successfully."
+          },
+          "400": {
+            "description": "The email is already in use or the password is invalid.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "The user could not be created."
+          }
+        }
+      }
+    },
+    "/api/user/self": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Fetches the current user's information.",
+        "responses": {
+          "200": {
+            "description": "The user was fetched successfully.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The user is not authenticated.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "The user could not be fetched."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Updates the current user's information.",
+        "requestBody": {
+          "description": "The user's updated information.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "205": {
+            "description": "The user was updated successfully."
+          },
+          "400": {
+            "description": "The user's information is invalid."
+          },
+          "401": {
+            "description": "The user is not authenticated."
+          },
+          "500": {
+            "description": "The user could not be updated."
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "PostalAddress": {
+        "required": [
+          "city",
+          "country",
+          "postalCode",
+          "recipient",
+          "street",
+          "streetNumber"
+        ],
+        "type": "object",
+        "properties": {
+          "recipient": {
+            "maxLength": 128,
+            "minLength": 1,
+            "type": "string"
+          },
+          "street": {
+            "maxLength": 256,
+            "minLength": 1,
+            "type": "string"
+          },
+          "streetNumber": {
+            "maxLength": 16,
+            "minLength": 1,
+            "type": "string"
+          },
+          "supplements": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "postalCode": {
+            "maxLength": 16,
+            "minLength": 1,
+            "type": "string"
+          },
+          "city": {
+            "maxLength": 128,
+            "minLength": 1,
+            "type": "string"
+          },
+          "country": {
+            "maxLength": 128,
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": { }
+      },
+      "UserDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "nullable": true
+          },
+          "firstName": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "nullable": true
+          },
+          "phoneNumber": {
+            "type": "string",
+            "format": "tel",
+            "nullable": true
+          },
+          "function": {
+            "$ref": "#/components/schemas/UserFunction"
+          },
+          "address": {
+            "$ref": "#/components/schemas/PostalAddress"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserFunction": {
+        "enum": [
+          0,
+          1,
+          2,
+          4
+        ],
+        "type": "integer",
+        "format": "int32"
+      }
+    },
+    "securitySchemes": {
+      "basic": {
+        "type": "http",
+        "description": "Basic authentication scheme.",
+        "scheme": "basic"
+      }
+    }
+  }
+}

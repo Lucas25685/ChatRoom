@@ -1,0 +1,24 @@
+<div class="chat-status-label-component">
+  @switch (this.status()) {
+    @case (this.requestStatuses.Draft) {
+      <span class="chat-status-label-component-label text-blue-800 bg-blue-200">
+        <ng-icon class="mr-2" name="saxEdit2Outline"></ng-icon>
+        Draft
+      </span>
+    }
+
+    @case (this.requestStatuses.Completed) {
+      <span class="chat-status-label-component-label text-blue-600 bg-blue-100">
+        <ng-icon class="mr-2" name="saxClockOutline"></ng-icon>
+        Waiting for a response
+      </span>
+    }
+
+    @case (this.requestStatuses.InProgress) {
+      <span class="chat-status-label-component-label text-green-800 bg-green-200">
+        <ng-icon class="mr-2" name="saxBagTickOutline"></ng-icon>
+        In progress
+      </span>
+    }
+  }
+</div>

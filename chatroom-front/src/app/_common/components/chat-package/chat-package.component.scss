@@ -1,0 +1,17 @@
+.package {
+	@apply inline-flex *:inline-flex flex-row items-center space-x-4 text-start;
+
+	&-icon {
+		@apply justify-center items-center shrink-0;
+		@apply h-11 w-11;
+		@apply border rounded-full border-gray-300;
+		&:is(.dark *) { @apply border-gray-700; }
+	}
+
+	&-info {
+		@apply flex-col text-start;
+		@apply *:text-sm;
+
+		.cip13 { @apply text-gray-500; }
+	}
+}

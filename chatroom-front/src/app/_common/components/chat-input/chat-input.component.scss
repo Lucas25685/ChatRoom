@@ -1,0 +1,26 @@
+.chat-input-component {
+	@apply flex flex-row items-center
+		overflow-hidden border rounded-2xl
+		border-gray-200;
+
+	&:is(.dark *) {
+		@apply border-gray-700;
+	}
+
+	.chat-input-component-stepper {
+		@apply flex flex-row items-center shrink-0 px-2 py-2
+			border-l border-gray-200 text-gray-800;
+
+		&:hover {
+			@apply text-gray-950;
+		}
+
+		&:is(.dark *) {
+			@apply text-gray-300 border-gray-700;
+
+			&:hover {
+				@apply text-gray-100;
+			}
+		}
+	}
+}

@@ -1,0 +1,12 @@
+{
+	// For more information, visit: https://go.microsoft.com/fwlink/?linkid=827846
+	"recommendations": [
+		"angular.ng-template",
+		"mhutchie.git-graph",
+		"oouo-diogo-perdigao.docthis",
+		"ms-azuretools.vscode-docker",
+		"johnpapa.angular-essentials",
+		"donjayamanne.git-extension-pack",
+		"bradlc.vscode-tailwindcss"
+	]
+}

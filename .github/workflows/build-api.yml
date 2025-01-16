@@ -1,0 +1,59 @@
+name: Build Test & Package API
+
+permissions:
+  contents: read
+  packages: read
+
+on:
+  workflow_call:
+    inputs:
+      build_configuration:
+        description: "Build Configuration"
+        type: string
+        default: "Production"
+      publish_artifact:
+        description: "Publish Artifact"
+        type: boolean
+        default: true
+      artifact_name:
+        description: "Artifact Name"
+        type: string
+        required: false
+        default: "mhp-api"
+
+jobs:
+  build:
+    name: Build API (${{ inputs.build_configuration }})
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # avoid shallow clone so nbgv can do its work.
+
+      - name: Setup .NET 8.0
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+
+      - uses: dotnet/nbgv@v0.4
+        id: nbgv
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build ./ChatRoom.Startup/ChatRoom.Startup.csproj --no-restore --configuration ${{ inputs.build_configuration }}
+
+      - name: Test
+        run: dotnet test --no-build --verbosity normal
+
+      - name: Package
+        if: ${{ inputs.publish_artifact }}
+        run: dotnet pack ./ChatRoom.Startup/ChatRoom.Startup.csproj --no-build --configuration ${{ inputs.build_configuration }} --output ./publish
+
+      - name: Upload Artifacts
+        if: ${{ inputs.publish_artifact }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ inputs.artifact_name }}
+          path: ./publish

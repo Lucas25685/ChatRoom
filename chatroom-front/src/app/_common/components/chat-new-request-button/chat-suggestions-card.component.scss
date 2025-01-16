@@ -1,0 +1,20 @@
+button {
+	@apply flex flex-row items-center p-4 max-w-md w-full space-x-6 rounded-xl text-left border;
+	@apply text-gray-900 border-gray-200 bg-white;
+	@apply disabled:opacity-60;
+
+	&:is(.dark *) {
+		@apply text-white bg-gray-800 border-gray-700;
+	}
+
+	.icon {
+		@apply flex size-[5.75rem] justify-center items-center shrink-0 rounded-lg;
+	}
+
+	.text {
+		@apply flex flex-col w-full;
+
+		.title { @apply font-medium; }
+		.description { @apply text-sm text-gray-500; }
+	}
+}

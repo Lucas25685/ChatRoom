@@ -1,0 +1,12 @@
+<div class="chat-progressbar-component">
+  <div class="chat-progressbar-component-bar">
+    <div
+      class="absolute h-full rounded-full bg-blue-500"
+      [style]="{ 'width': this.progress() + '%' }"
+    ></div>
+  </div>
+
+  @if (this.showStats()) {
+    <span class="shrink-0">{{ this.progress() }} %</span>
+  }
+</div>

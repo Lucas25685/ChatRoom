@@ -1,0 +1,10 @@
+<div class="package" id="{{package().cip13}}-info">
+	<div inert class="package-icon">
+		<chat-svg-icon icon="pill" />
+	</div>
+
+	<div class="package-info">
+		<span	class="cip13">{{ +package().cip13 | toCip : 13 }}</span>
+		<label for="{{package().cip13}}-info">{{ package().shortName }}</label>
+	</div>
+</div>

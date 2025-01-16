@@ -1,0 +1,59 @@
+name: Build Test and Package Web App
+
+on:
+  workflow_call:
+    inputs:
+      build_configuration:
+        description: 'Build Configuration'
+        type: string
+        default: 'production'
+      publish_artifact:
+        description: 'Publish Artifact'
+        type: boolean
+        default: true
+      artifact_name:
+        description: 'Artifact Name'
+        type: string
+        required: false
+        default: 'mhp-webapp'
+
+permissions:
+  contents: read
+  packages: read
+
+jobs:
+  # Build angular app
+  build-web:
+    name: Build Web App (${{ inputs.build_configuration }})
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        submodules: 'recursive'
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+
+    - name: Install Angular CLI
+      run: npm install -g @angular/cli
+
+    - name: Install dependencies
+      working-directory: chatroom-app
+      run: npm install
+
+    - name: Build Angular app
+      working-directory: chatroom-app
+      run: ng build --aot --configuration=${{ inputs.build_configuration }}
+
+    # - name: Test Angular app
+    #   working-directory: chatroom-app
+    #   run: ng test --watch=false --browsers=ChromeHeadless --code-coverage
+
+    - name: Upload Artifacts
+      if: ${{ inputs.publish_artifact }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ inputs.artifact_name }}
+        path: ./chatroom-app/dist/chatroom-app

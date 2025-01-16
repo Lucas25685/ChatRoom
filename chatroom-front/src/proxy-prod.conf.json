@@ -1,0 +1,8 @@
+{
+	"/api": {
+		"target": "#URL_DE_LA_PROD#",
+		"secure": false,
+		"changeOrigin": true,
+		"ws": true
+	}
+}

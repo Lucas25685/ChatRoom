@@ -1,0 +1,8 @@
+{
+	"/api": {
+		"target": "https://api.dev.chatroom.com",
+		"secure": false,
+		"changeOrigin": true,
+		"ws": true
+	}
+}

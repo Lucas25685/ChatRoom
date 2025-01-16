@@ -1,0 +1,16 @@
+<button [disabled]="this.disabled()">
+	<div class="icon" [ngClass]="iconBg()">
+		@if (icon()) {
+			<chat-svg-icon [icon]="icon()!" />
+		}
+	</div>
+
+	<div class="text">
+		<div class="title">{{ title() }}</div>
+		<div class="description">{{ text() }}</div>
+	</div>
+
+	<div>
+		<ng-icon name="saxArrowRight3Outline" />
+	</div>
+</button>

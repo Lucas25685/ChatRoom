@@ -1,0 +1,21 @@
+<button
+  class="chat-button-component py-{{ this.size() === 'large' ? '4' : '2' }}"
+  [ngClass]="this.type()"
+  [disabled]="disabled()"
+>
+  @if(this.prefix()) {
+    <ng-icon
+      [ngClass]="this.text() ? 'mr-2' : ''"
+      [name]="this.prefix()"
+    />
+  }
+
+  {{ this.text() }}
+
+  @if(this.suffix()) {
+    <ng-icon
+      [ngClass]="this.text() ? 'ml-2' : ''"
+      [name]="this.suffix()"
+    />
+  }
+</button>

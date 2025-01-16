@@ -1,0 +1,47 @@
+<div class="chat-input-component">
+  @if (this.prefix()) {
+    <ng-icon
+      class="ml-4 shrink-0 text-gray-500"
+      [name]="this.prefix()"
+    />
+  }
+
+  @if (this.type() === 'textarea') {
+    <textarea
+      class="w-full text-base p-4 bg-transparent text-gray-900 dark:text-white"
+      [disabled]="this.disabled()"
+      [(ngModel)]="this.value"
+      [placeholder]="this.placeholder() || ''"
+      [rows]="3"
+      [value]="this.value()"
+    ></textarea>
+  }
+
+  @else {
+    <input
+      class="w-full text-base p-4 text-gray-900 dark:text-white"
+      [disabled]="this.disabled()"
+      [max]="this.max()"
+      [min]="this.min()"
+      [(ngModel)]="this.value"
+      [placeholder]="this.placeholder() || ''"
+      [step]="this.step()"
+      [type]="this.type() === 'date' ? this.type() : 'text'"
+      [value]="this.value()"
+    />
+  }
+
+  @if (this.suffix()) {
+    <span class="mr-4 shrink-0 text-gray-500">{{ this.suffix() }}</span>
+  }
+
+  @if (this.type() === 'number' && this.stepper()) {
+    <button class="chat-input-component-stepper" (click)="this.decrease()">
+      <ng-icon name="saxMinusOutline" />
+    </button>
+
+    <button class="chat-input-component-stepper" (click)="this.increase()">
+      <ng-icon name="saxAddOutline" />
+    </button>
+  }
+</div>

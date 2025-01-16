@@ -1,0 +1,20 @@
+name: 'CI: Build & Test Web App'
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+
+jobs:
+  # Call the build-web.yml workflow
+  build-web:
+    strategy: 
+      matrix:
+        environment: ['development', 'production']
+    name: Build & Test Web App (${{ matrix.environment }})
+    uses: ./.github/workflows/build-web.yml
+    with:
+      build_configuration: 'production'
+      artifact_name: 'mhp-webapp-${{ matrix.environment }}'

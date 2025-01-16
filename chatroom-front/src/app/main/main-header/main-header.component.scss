@@ -1,0 +1,35 @@
+.chat-header-nav {
+	border-bottom: 1px solid #e8ecf2;
+
+	&:is(.dark *) {
+		border-bottom: 1px solid rgb(55 65 81);
+	}
+
+	.chat-header-nav-link {
+		@apply flex p-2
+      rounded-lg text-sm font-medium leading-6 cursor-pointer
+      text-gray-900;
+
+		&:is(.dark *) {
+			@apply text-white;
+		}
+	}
+}
+
+.chat-header-nav-mobile-link {
+	@apply flex flex-row items-center space-x-2 -mx-3 px-3 py-2
+    rounded-lg text-base font-medium leading-7 cursor-pointer
+    text-gray-900;
+
+	&:hover {
+		@apply bg-gray-50;
+	}
+
+	&:is(.dark *) {
+		@apply text-white;
+
+		&:hover {
+			@apply bg-gray-700;
+		}
+	}
+}

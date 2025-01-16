@@ -1,0 +1,9 @@
+.chat-view-switch-component {
+	@apply flex flex-row space-x-1 p-1
+		rounded-full
+		text-gray-500 bg-gray-200;
+
+	&:is(.dark *) {
+		@apply bg-gray-900;
+	}
+}

@@ -1,0 +1,130 @@
+name: "CD: Deploy Dev Platform"
+
+on:
+  push:
+    branches:
+      - develop
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+    branches:
+      - develop
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository_owner }}/chatroom-api
+
+jobs:
+  build-package-api:
+    uses: ./.github/workflows/build-api.yml
+    with:
+      build_configuration: 'Production'
+      publish_artifact: false
+        
+  build-deploy-api-docker:
+    if: github.event_name == 'push'
+    needs: build-package-api
+    runs-on: ubuntu-latest
+    name: Build & Push API Container (Dev)
+    permissions: 
+      contents: read
+      packages: write
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with: 
+        fetch-depth: 0
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v3
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+    - name: Login to DockerHub
+      uses: docker/login-action@v2
+      with:
+        registry: ${{ env.REGISTRY }}
+        username: ${{ github.actor }}
+        password: ${{ github.token }}
+    - name: Extract metadata (tags, labels) for Docker
+      id: meta
+      uses: docker/metadata-action@v5
+      with:
+        images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+        flavor: |
+          latest=true
+        tags: |
+          type=semver,pattern={{version}}
+          type=ref,event=branch
+          type=ref,event=tag
+          type=sha
+    - name: Build and push
+      uses: docker/build-push-action@v6
+      with:
+        context: .
+        file: ./ChatRoom.Startup/Dockerfile
+        push: true
+        tags: ${{ steps.meta.outputs.tags }}
+        labels: ${{ steps.meta.outputs.labels }}
+
+  deploy-api-azure:
+    if: github.event_name == 'push'
+    needs: build-deploy-api-docker
+    runs-on: ubuntu-latest
+    name: Deploy API Container to ACA (Dev)
+    environment:
+      name: dev
+      url: 'https://api.dev.chatroom.com/'
+    permissions: 
+      contents: none
+      packages: read
+      id-token: write
+    steps:
+    - name: Login to Azure
+      uses: azure/login@v2
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+    - name: Deploy API Container to ACA
+      uses: azure/container-apps-deploy-action@v2
+      with:
+        resourceGroup: ${{ vars.AZURE_RESOURCE_GROUP }}
+        containerAppName: ${{ vars.API_ACA_NAME }}
+        # Deploy the image from the registry, using SHA as the tag
+        imageToDeploy: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:develop
+#        imageToDeploy: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:develop
+        registryUrl: ${{ env.REGISTRY }}
+        registryUsername: ${{ secrets.REGISTRY_USERNAME }}
+        registryPassword: ${{ secrets.REGISTRY_PASSWORD }}
+      
+  build-package-web:
+    uses: ./.github/workflows/build-web.yml
+    with:
+      build_configuration: 'dev-azure'
+      artifact_name: 'mhp-webapp-dev'
+
+  deploy-web:
+    needs: 
+      - build-package-web
+    environment: 
+      name: dev
+      url: 'https://dev.chatroom.com/'
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    name: Build & Deploy to Azure SWA (Dev)
+    steps:
+      - name: Fetch artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: mhp-webapp-dev
+          path: ./dist
+      - name: Build And Deploy
+        id: builddeploy
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
+          action: "upload"
+          # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
+          app_location: "dist/browser" # App source code path
+          # api_location: "./ChatRoom.API" # Api source code path - optional
+          output_location: "" # Built app content directory - optional
+          skip_app_build: true

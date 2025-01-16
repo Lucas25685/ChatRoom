@@ -1,0 +1,27 @@
+@switch (this.label()) {
+
+  @default {
+    <div class="chat-label text-gray-500 bg-gray-100 dark:text-gray-500 dark:bg-gray-900">
+      <span class="text-sm">{{ this.label() }}</span>
+    </div>
+  }
+
+  @case ('In demand') {
+    <div class="chat-label text-purple-700 bg-purple-200">
+      <ng-icon class="mr-2" name="matTrendingUpOutline" />
+      <span class="text-sm">In demand</span>
+    </div>
+  }
+
+  @case ('New') {
+    <div class="chat-label text-white bg-blue-500">
+      <span class="text-sm">New</span>
+    </div>
+  }
+
+  @case ('Beta') {
+    <div class="chat-label bg-amber-400 bg-opacity-80 text-gray-900 dark:text-white">
+      <span class="text-sm">Beta</span>
+    </div>
+  }
+}

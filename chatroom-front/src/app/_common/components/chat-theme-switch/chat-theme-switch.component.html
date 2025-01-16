@@ -1,0 +1,12 @@
+<label class="chat-theme-switch-component">
+  <input type="checkbox" [(ngModel)]="this.themeColor" (change)="this.updateThemeColor()" class="sr-only peer">
+  <div class="relative w-11 h-6 bg-gray-200 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 dark:border-gray-600 peer-checked:bg-blue-600">
+    <div
+      class="chat-theme-switch-component-inner"
+      [ngClass]="this.themeColor ? 'translate-x-full rtl:-translate-x-full border-white dark:border-gray-800' : ''"
+    >
+      @if (this.themeColor) { <ng-icon class="text-gray-900 dark:text-gray-100" name="bootstrapMoonFill" /> }
+      @else { <ng-icon class="text-gray-900 dark:text-gray-100" name="bootstrapSunFill" /> }
+    </div>
+  </div>
+</label>

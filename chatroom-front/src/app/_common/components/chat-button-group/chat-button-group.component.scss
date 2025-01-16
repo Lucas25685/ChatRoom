@@ -1,0 +1,23 @@
+.chat-button-group-component {
+	@apply flex flex-row space-x-0.5 p-1
+		rounded-lg overflow-hidden
+		bg-gray-100 text-gray-900;
+
+	&:is(.dark *) {
+		@apply bg-gray-900 text-white;
+	}
+
+	.chat-button-group-component-button {
+		@apply flex flex-row items-center px-4 py-1
+			rounded-md text-sm;
+
+		&.active {
+			@apply shadow-sm
+				bg-white;
+
+			&:is(.dark *) {
+				@apply bg-gray-800;
+			}
+		}
+	}
+}

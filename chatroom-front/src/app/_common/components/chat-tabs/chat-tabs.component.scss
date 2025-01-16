@@ -1,0 +1,19 @@
+.chat-tabs-component {
+	@apply flex flex-row items-start
+		space-x-6
+		w-full
+		text-gray-500;
+
+	.chat-tabs-component-button {
+		@apply py-2
+			border-b border-transparent;
+
+		&.active {
+			@apply text-gray-900 border-blue-500;
+
+			&:is(.dark *) {
+				@apply text-white;
+			}
+		}
+	}
+}

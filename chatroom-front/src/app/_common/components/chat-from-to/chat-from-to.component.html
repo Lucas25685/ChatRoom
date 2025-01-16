@@ -1,0 +1,30 @@
+<div class="chat-from-to">
+	<div class="from" title="From">
+		<img inert [src]="this.getIconUri(from())" alt="Sender Icon" />
+
+		<div class="name">
+			<div class="side">From</div>
+			<span>{{ this.getDisplayName(from()) }}</span>
+		</div>
+	</div>
+
+	<chat-svg-icon inert icon="from-to" />
+
+	@if (this.to()?.at(0); as c;) {
+		<div class="to" title="To">
+			<img inert [src]="this.getIconUri(c)" alt="Receiver Image" />
+
+			<div class="name">
+				<div class="side">To</div>
+
+				<div class="inline-flex flex-row gap-2" [title]="getDisplayNames(to()!)">
+					<span>{{ this.getDisplayName(c) }}</span>
+
+					@if (to()!.length > 1) {
+						<span class="more">+ {{ to()!.length - 1 }}</span>
+					}
+				</div>
+			</div>
+		</div>
+	}
+</div>

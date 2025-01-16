@@ -1,0 +1,15 @@
+meta {
+  name: Get room from offer
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{medhuburl}}/api/room/9ebccf06-79f3-4d76-aa14-1a708c343ce9
+  body: none
+  auth: none
+}
+
+headers {
+  Cookie: .AspNetCore.Cookies={{CookieExporter}}
+}

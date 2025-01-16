@@ -1,0 +1,8 @@
+.chat-status-label-component {
+	@apply flex flex-row;
+
+	.chat-status-label-component-label {
+		@apply flex flex-row items-center shrink-0
+			rounded-lg px-2 py-1;
+	}
+}

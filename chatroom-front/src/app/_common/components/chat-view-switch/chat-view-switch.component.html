@@ -1,0 +1,19 @@
+<div class="chat-view-switch-component">
+
+  <button
+    class="flex flex-row p-2 justify-center item-center rounded-full"
+    [ngClass]="this.selected === 1 ? 'shadow-sm bg-white dark:bg-gray-800' : ''"
+    (click)="this.choose(1)"
+  >
+    <ng-icon name="saxRowVerticalBold"></ng-icon>
+  </button>
+
+  <button
+    class="flex flex-row p-2 justify-center item-center rounded-full"
+    [ngClass]="this.selected === 2 ? 'shadow-sm bg-white dark:bg-gray-800' : ''"
+    (click)="this.choose(2)"
+  >
+    <ng-icon name="saxElement3Bold"></ng-icon>
+  </button>
+
+</div>

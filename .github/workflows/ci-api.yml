@@ -1,0 +1,20 @@
+name: 'CI: Build & Test API' 
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+
+jobs:
+  # Call the build-web.yml workflow
+  build-web:
+    strategy: 
+      matrix:
+        environment: ['Development', 'Production']
+    name: Build & Test API (${{ matrix.environment }})
+    uses: ./.github/workflows/build-api.yml
+    with:
+      build_configuration: ${{ matrix.environment }}
+      artifact_name: 'mhp-api-${{ matrix.environment }}'

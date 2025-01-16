@@ -1,0 +1,56 @@
+<!--
+	TODO: Refactor CSS
+-->
+
+@if ((this.isFileInputFilled() && this.file())) {
+	<div class="flex flex-row p-4 items-center rounded-2xl border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
+
+		@if (this.file()) {
+			<ng-icon class="mr-4 shrink-0 text-blue-600" name="saxTickCircleBold" />
+		}
+
+		@else {
+			<chat-svg-icon icon="spinner" />
+		}
+
+		<span class="w-full text-sm text-gray-900 dark:text-white">{{ this.file()?.name }}</span>
+
+		@if (this.file()) {
+			<button
+				class="flex flex-row justify-center items-center hover:text-red-600 dark:text-white"
+				(click)="clearFile()"
+			>
+				<ng-icon name="saxTrashOutline" />
+			</button>
+		}
+	</div>
+}
+
+@else {
+	<label
+		class="flex flex-col justify-center items-center px-4 py-6 cursor-pointer rounded-2xl border-2 border-dashed border-gray-400 hover:border-gray-500"
+		for="file-input"
+		(fileDropped)="this.inputDroppedFileProcess($event)"
+		appDragAndDrop
+	>
+		<div class="flex flex-col items-center justify-center pt-5 pb-6">
+			<ng-icon
+				class="mb-6 text-gray-900 dark:text-white"
+				name="saxImportOutline"
+			/>
+
+			<span class="mb-2 font-semibold text-gray-900 dark:text-white">Drag and drop your file or click to browse</span>
+			<span class="text-gray-500">
+				{{ acceptedFiles() ? 'Only ' : 'All' }}{{ acceptedFiles()?.join(', ') }} {{ acceptedFiles()?.length || 0 | i18nPlural:{'=1':'format is', 'other':'formats are'} }} supported.
+			</span>
+		</div>
+
+		<input
+			class="hidden"
+			[accept]="acceptedFiles()"
+			id="file-input"
+			type="file"
+			(change)="this.inputFileProcess($event.target)"
+		/>
+	</label>
+}

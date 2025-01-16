@@ -1,0 +1,28 @@
+.chat-main-account {
+	@apply flex flex-col space-y-6 w-full;
+
+	&-container {
+		@apply flex flex-col justify-center space-y-10
+			md:flex-row md:space-x-10 md:space-y-0;
+	}
+
+	&-left {
+		@apply flex flex-col space-y-6 shrink-0 h-fit w-96
+			rounded-2xl
+			text-gray-900 bg-white;
+
+		&:is(.dark *) {
+			@apply text-white bg-gray-800;
+		}
+	}
+
+	&-right {
+		@apply flex flex-col space-y-6 w-full p-6
+			rounded-2xl
+			text-gray-900 bg-white;
+
+		&:is(.dark *) {
+			@apply text-white bg-gray-800;
+		}
+	}
+}

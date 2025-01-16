@@ -1,0 +1,8 @@
+.main-header-account {
+	@apply flex flex-row items-center space-x-6
+		text-gray-900;
+
+	&:is(.dark *) {
+		@apply text-white;
+	}
+}
