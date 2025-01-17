@@ -57,5 +57,5 @@ public interface IMessagingHubInvoke
     /// <summary>
     /// Create chat room
     /// </summary>
-    Task<ChatRoomDto> CreateChatRoom(Guid roomId);
+    Task<ChatRoomDto> CreateChatRoom();
 }

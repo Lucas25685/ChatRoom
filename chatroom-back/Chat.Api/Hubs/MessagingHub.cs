@@ -49,7 +49,7 @@ public sealed class MessagingHub : Hub<IMessagingHubPush>, IMessagingHubInvoke
     /// <summary>
     /// Gets the chat room from an offer.
     /// </summary>
-    public async Task<ChatRoomDto> CreateChatRoom(Guid offerId)
+    public async Task<ChatRoomDto> CreateChatRoom()
     {
         Model.Messaging.ChatRoom room = await _messagingService.CreateChatRoom(NameIdentifier)
                                         ?? throw new ArgumentException("Offer not created");
