@@ -30,17 +30,6 @@ Go to the [Official Docker website](https://www.docker.com/) and install the ver
 
 Install .NET SDK to be able to launch the API, for this you must go to the [SDK download link](https://dotnet.microsoft.com/en-us/download) and download the version corresponding to your system.
 
-#### User Secrets
-
-Once the .NET tools to be able to launch the API are installed, you must then enter the User Secret of the API to be able to launch it, you can follow the [Microsoft documentation](https://learn.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-8.0&tabs=windows#how-the-secret-manager-tool-works) for details on how you must proceed according to the operating system you are using.
-
-In Windows, on the path `C:\Users\<YOUR_USERNAME>\AppData\Roaming\Microsoft\UserSecrets`, you must copy and paste the `secrets.json` file into a directory with the secret ID corresponding to `c3281ff1-33b2-453f -ba7d-b1cf330a1eaf`.
-
-![User Secrets Screenshot](/docs/pics/screenshot_user_secrets.png)
-
-> [!NOTE]  
-> You will find the file directly on the Team Dev channel of the organization's Teams.
-
 ### Angular
 
 For the front end application you must [download NodeJS](https://nodejs.org/en/download/package-manager) which will then install the NPM packet manager where you will then have to type the following commands in a terminal.
@@ -93,7 +82,7 @@ If not install them with the following command:
 In a second terminal, type the following commands:
 
 ```bash
-~$ cd ./ChatRoom.Api
+~$ cd ./ChatRoom.Startup
 ~$ dotnet run
 ```
 
