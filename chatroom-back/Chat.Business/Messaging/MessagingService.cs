@@ -90,30 +90,35 @@ public sealed class MessagingService
     }
 
     /// <summary>
-    /// Get or create chat room for an offer.
+    /// create chat room for an offer.
     /// </summary>
     /// <returns>The chat room.</returns>
-    public async Task<Model.Messaging.ChatRoom?> GetOrCreateChatRoom(Guid roomId, string nameIdentifier,
+    public async Task<ChatRoom?> GetChatRoom(Guid roomId,
         CancellationToken ct = default)
     {
-        Model.Messaging.ChatRoom? chatRoom = await _messagingPersistance.GetChatRoomAsync(roomId, ct);
-        
-        if (chatRoom is null)
-        {
-            User user = await GetUserFromNameIdentifier(nameIdentifier);
-
-            // using a HashSet to avoid duplicates if userCompany is importer or exporter
-            HashSet<User> participants = [user];
-            
-            chatRoom = new Model.Messaging.ChatRoom
-            {
-                Participants = participants.ToList()
-            };
-
-            return await _messagingPersistance.CreateRoomAsync(chatRoom, ct);
-        }
+        ChatRoom? chatRoom = await _messagingPersistance.GetChatRoomAsync(roomId, ct);
 
         return chatRoom;
+    }
+    
+    /// <summary>
+    /// create chat room for an offer.
+    /// </summary>
+    /// <returns>The chat room.</returns>
+    public async Task<Model.Messaging.ChatRoom?> CreateChatRoom( string nameIdentifier,
+        CancellationToken ct = default)
+    {
+        User user = await GetUserFromNameIdentifier(nameIdentifier);
+
+        // using a HashSet to avoid duplicates if userCompany is importer or exporter
+        HashSet<User> participants = [user];
+        
+        ChatRoom chatRoom = new Model.Messaging.ChatRoom
+        {
+            Participants = participants.ToList()
+        };
+
+        return await _messagingPersistance.CreateRoomAsync(chatRoom, ct);
     }
     
     

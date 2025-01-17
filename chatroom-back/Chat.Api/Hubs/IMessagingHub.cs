@@ -48,4 +48,14 @@ public interface IMessagingHubInvoke
     /// Submits a new message to the chatroom.
     /// </summary>
     public Task SendMessage(string roomId, string message);
+
+    /// <summary>
+    /// Get Chat rooom
+    /// </summary>
+    Task<ChatRoomDto> GetChatRoom(Guid roomId);
+
+    /// <summary>
+    /// Create chat room
+    /// </summary>
+    Task<ChatRoomDto> CreateChatRoom(Guid roomId);
 }

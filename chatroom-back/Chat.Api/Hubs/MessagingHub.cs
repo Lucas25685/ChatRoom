@@ -38,10 +38,21 @@ public sealed class MessagingHub : Hub<IMessagingHubPush>, IMessagingHubInvoke
     /// <summary>
     /// Gets the chat room from an offer.
     /// </summary>
-    public async Task<ChatRoomDto> GetChatRoomFromOffer(Guid offerId)
+    public async Task<ChatRoomDto> GetChatRoom(Guid roomId)
     {
-        Model.Messaging.ChatRoom room = await _messagingService.GetOrCreateChatRoom(offerId, NameIdentifier)
+        Model.Messaging.ChatRoom room = await _messagingService.GetChatRoom(roomId)
                                         ?? throw new ArgumentException("Offer not found");
+
+        return _mapper.Map<ChatRoomDto>(room);
+    }
+    
+    /// <summary>
+    /// Gets the chat room from an offer.
+    /// </summary>
+    public async Task<ChatRoomDto> CreateChatRoom(Guid offerId)
+    {
+        Model.Messaging.ChatRoom room = await _messagingService.CreateChatRoom(NameIdentifier)
+                                        ?? throw new ArgumentException("Offer not created");
 
         return _mapper.Map<ChatRoomDto>(room);
     }
