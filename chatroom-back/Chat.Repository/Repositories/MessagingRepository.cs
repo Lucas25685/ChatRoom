@@ -131,4 +131,15 @@ public sealed class MessagingRepository : IMessagingPersistance
         return room;
     }
 
+    /// <summary>
+    /// Updates an existing chat room.
+    /// </summary>
+    /// <param name="room">The chat room to update.</param>
+    /// <param name="ct">Cancellation token.</param>
+    public async Task UpdateChatRoomAsync(ChatRoom room, CancellationToken ct = default)
+    {
+        _context.ChatRooms.Update(room);
+        await _context.SaveChangesAsync(ct);
+    }
+
 }

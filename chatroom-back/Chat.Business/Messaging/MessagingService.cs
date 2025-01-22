@@ -120,8 +120,34 @@ public sealed class MessagingService
 
         return await _messagingPersistance.CreateRoomAsync(chatRoom, ct);
     }
-    
-    
+
+    /// <summary>
+    /// Adds a user to a chat room.
+    /// </summary>
+    /// <param name="roomId">The ID of the chat room.</param>
+    /// <param name="userId">The ID of the user.</param>
+    /// <param name="ct">Cancellation token.</param>
+    /// <returns>The updated chat room.</returns>
+    public async Task<ChatRoom> JoinChatRoomAsync(Guid roomId, string userId, CancellationToken ct = default)
+    {
+        var user = _userPersistance.GetUserById(Guid.Parse(userId))
+                    ?? throw new ArgumentException("User not found.");
+
+        var room = await _messagingPersistance.GetChatRoomAsync(roomId, ct)
+                    ?? throw new ArgumentException("Room not found.");
+
+        if (room.Participants.Any(p => p.Id == user.Id))
+        {
+            throw new InvalidOperationException("User already in the room.");
+        }
+
+        room.Participants.Add(user);
+        await _messagingPersistance.CreateRoomAsync(room, ct);
+
+        return room;
+    }
+
+
     /// <summary>
     /// Gets a specific chat room.
     /// </summary>

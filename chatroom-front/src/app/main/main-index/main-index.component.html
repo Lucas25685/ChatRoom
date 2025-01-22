@@ -14,9 +14,12 @@
             <p class="text-sm text-gray-600 text-left">Created at: {{ room.createdAt | date:'medium' }}</p>
             <p class="text-sm text-gray-600 text-left">Participants: {{ room.participants.length }}</p>
             <p class="text-sm text-gray-600 text-left">Status: <span [ngClass]="{'text-green-500': !room.readOnly, 'text-red-500': room.readOnly}">{{ room.readOnly ? 'Read-only' : 'Active' }}</span></p>
-						<button (click)="joinChatRoom(room.id)" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+						<!-- <button (click)="joinChatRoom(room.id)" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
 							Join Chat Room
-						</button>
+						</button> -->
+            <button [routerLink]="['/chat-room', room.id]" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+              Join Chat Room
+            </button>
           </li>
         </ul>
       </div>
@@ -29,6 +32,9 @@
       <div class="mt-10">
         <button (click)="createChatRoom()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
           Create Chat Room
+        </button>
+        <button [routerLink]="['/chat-room/1']" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+          Join Chat Room
         </button>
       </div>
     </div>

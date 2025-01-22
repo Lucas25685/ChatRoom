@@ -1,0 +1,8 @@
+<div class="chat-room">
+    <h1 class="text-4xl font-bold text-indigo-600 mb-4">Chat Room {{ roomId }}</h1>
+    <ul>
+      <li *ngFor="let message of messages">
+        <p>{{ message.content }}</p>
+      </li>
+    </ul>
+  </div>
