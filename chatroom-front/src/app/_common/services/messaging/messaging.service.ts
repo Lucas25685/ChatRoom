@@ -3,6 +3,7 @@ import { environment } from 'src/environments/environment';
 import { ChatMessage } from '../../models/chat-message.model';
 import { ChatRoom } from '../../models/chat-room.model';
 import { SignalRClientBase } from '../signalr/signalr.client.base';
+import { Observable } from 'rxjs';
 
 @Injectable({
 	providedIn: 'root',
@@ -48,14 +49,14 @@ export class MessagingService extends SignalRClientBase {
 		return await this._hubConnection.invoke<ChatRoom>('CreateChatRoom');
 	}
 
-	/**
-	 * Join the chat room and get all chat room message history
-	 */
-	public async joinChatRoom(roomId: string): Promise<void> {
-		await this.getConnectionPromise;
+	public async joinChatRoom(roomId: string): Promise<ChatMessage[]> {
+    await this.getConnectionPromise;
 
-		const chatHistory = await this._hubConnection.invoke<ChatMessage[]>('JoinChatRoom', roomId);
-	}
+    // Invoke the method on the SignalR server and receive the chat history
+    const chatHistory: ChatMessage[] = await this._hubConnection.invoke<ChatMessage[]>('JoinChatRoom', roomId);
+
+    return chatHistory;
+}
 
 	/**
 	 * Get all chat room messages
@@ -74,4 +75,20 @@ export class MessagingService extends SignalRClientBase {
 
 		await this._hubConnection.invoke('SendMessage', roomId, message);
 	}
+
+		/**
+	 * Send message to the chat room
+	 */
+		public async getAllChatRooms(): Promise<Observable<ChatRoom[]>> {
+			return new Observable<ChatRoom[]>((observer) => {
+				this.getConnectionPromise.then(() => {
+					this._hubConnection.invoke<ChatRoom[]>('GetAllChatRooms')
+						.then((chatRooms) => {
+							observer.next(chatRooms);
+							observer.complete();
+						})
+						.catch((err) => observer.error(err));
+				});
+			});
+		}
 }

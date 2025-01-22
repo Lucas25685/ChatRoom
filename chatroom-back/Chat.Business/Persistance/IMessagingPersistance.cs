@@ -57,4 +57,11 @@ public interface IMessagingPersistance
     /// <param name="ct">Cancellation token.</param>
     /// <returns>The chat message.</returns>
     Task<ChatMessage?> GetMessageAsync(Guid id, CancellationToken ct = default);
+    
+    /// <summary>
+    /// Gets all chat rooms with their participants.
+    /// </summary>
+    /// <param name="ct">Cancellation token.</param>
+    /// <returns>All chat rooms.</returns>
+    Task<List<ChatRoom>> GetAllChatRooms(CancellationToken ct = default);
 }

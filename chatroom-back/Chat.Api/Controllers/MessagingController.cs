@@ -60,4 +60,19 @@ public sealed class MessagingController : UserControllerBase
 
         return _mapper.Map<ChatMessageDto>(message);
     }
+    
+    /// <summary>
+    /// Gets all chat rooms.
+    /// </summary>
+    /// <returns>All chat rooms.</returns>
+    /// <response code="200">Chat rooms retrieved successfully.</response>
+    /// <response code="403">Unauthorized to view chat rooms.</response>
+    [HttpGet("rooms")]
+    public async Task<ActionResult<IEnumerable<ChatRoomDto>>> GetAllChatRoomsAsync()
+    {
+        var chatRooms = await _messagingService.GetAllChatRooms(HttpContext.RequestAborted);
+        var chatRoomDtos = _mapper.Map<IEnumerable<ChatRoomDto>>(chatRooms);
+    
+        return Ok(chatRoomDtos);
+    }
 }

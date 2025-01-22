@@ -57,7 +57,9 @@ public sealed class MessagingHub : Hub<IMessagingHubPush>, IMessagingHubInvoke
         return _mapper.Map<ChatRoomDto>(room);
     }
     
-    /// <inheritdoc />
+    /// <summary>
+    /// Gets the chat room from an offer.
+    /// </summary>
     public async Task<IEnumerable<ChatMessageDto>> JoinChatRoom(Guid roomId)
     {
         if (await _messagingService.GetChatRoomAsync(roomId, Context.ConnectionAborted) is not { } room)
@@ -65,6 +67,8 @@ public sealed class MessagingHub : Hub<IMessagingHubPush>, IMessagingHubInvoke
 
         await Groups.AddToGroupAsync(Context.ConnectionId, roomId.ToString());
 
+        _messagingService.;
+        
         var messages = _messagingService.GetMessagesInRoom(roomId);
 
         return messages.Adapt<IEnumerable<ChatMessageDto>>(_mapper.Config);
@@ -81,4 +85,14 @@ public sealed class MessagingHub : Hub<IMessagingHubPush>, IMessagingHubInvoke
     {
         await _messagingService.SubmitMessageAsync(roomId, message, NameIdentifier);
     }
+    
+/// <summary>
+/// Gets all chat rooms.
+/// </summary>
+/// <returns>All chat rooms.</returns>
+public async Task<IEnumerable<ChatRoomDto>> GetAllChatRooms()
+{
+    var chatRooms = await _messagingService.GetAllChatRooms(Context.ConnectionAborted);
+    return _mapper.Map<IEnumerable<ChatRoomDto>>(chatRooms);
+}
 }

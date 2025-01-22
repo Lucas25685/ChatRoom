@@ -137,4 +137,13 @@ public sealed class MessagingService
     /// <returns>The chat message.</returns>
     public async Task<ChatMessage?> GetMessageAsync(Guid id, CancellationToken ct = default) =>
         await _messagingPersistance.GetMessageAsync(id, ct);
+    
+    /// <summary>
+    /// Gets all chat rooms with their participants.
+    /// </summary>
+    /// <returns>All chat rooms with their participants.</returns>
+    public async Task<List<Model.Messaging.ChatRoom>> GetAllChatRooms(CancellationToken ct = default)
+    {
+        return await _messagingPersistance.GetAllChatRooms(ct);
+    }
 }
